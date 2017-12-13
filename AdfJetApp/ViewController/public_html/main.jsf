@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html>
+<f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+        xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <af:document title="main.jsf" id="d1">
+        <af:messages id="m1"/>
+        <af:resource type="javascript" source="js/libs/require/require.js"/>
+        <af:resource type="css" source="css/alta/4.1.0/web/alta.css"/>
+        <script>
+          // initial JET load in ADF
+          require.config( {
+              baseUrl : "js"
+          });
+          require(["main"]);
+        
+          // force JET to apply UI binding on ADF PPR and re-draw
+          function pprEnforceJet() {
+              require(['ojs/ojcore', 'knockout', 'ojs/ojknockout'], function (oj, ko) {
+                  $(document).ready(function () {
+                      viewModel = ko.dataFor(document.body);
+                      ko.cleanNode($(document.body)[0]);
+                      ko.applyBindings(viewModel, document.body);
+                  });
+              });
+          }
+          
+          // call from JET to ADF
+          self.openDetailListenerAdf = function (event) {
+              var params = {
+                jetParam : event.detail.value
+              };
+              
+              // call button from region. ID can be parsed from input event
+              var element = AdfPage.PAGE.findComponentByAbsoluteId('r1:0:b2');
+              AdfCustomEvent.queue(element, "jsCallListener", params, true);
+          };
+        </script>
+        <af:form id="f1">
+            <af:panelTabbed position="above" id="pt1">
+                <af:showDetailItem text="Employee Review" id="sdi1"
+                                   disclosureListener="#{backingBeanScope.JetControllerBean.employeeReviewOpenListener}">
+                    <af:region value="#{bindings.emplssearchflow1.regionModel}" id="r1"/>
+                </af:showDetailItem>
+                <af:showDetailItem text="Employees" id="sdi2">
+                    <af:region value="#{bindings.employeesflow1.regionModel}" id="r2"/>
+                </af:showDetailItem>
+            </af:panelTabbed>
+        </af:form>
+    </af:document>
+</f:view>

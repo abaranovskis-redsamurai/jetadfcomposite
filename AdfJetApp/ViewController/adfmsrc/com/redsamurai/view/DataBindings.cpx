@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application" version="12.2.1.9.14" id="DataBindings"
+             SeparateXMLFiles="false" Package="com.redsamurai.view" ClientType="Generic">
+  <definitionFactories>
+    <factory nameSpace="http://xmlns.oracle.com/adfm/dvt"
+             className="oracle.adfinternal.view.faces.dvt.model.binding.FacesBindingFactory"/>
+    <factory nameSpace="http://xmlns.oracle.com/adf/controller/binding"
+             className="oracle.adf.controller.internal.binding.TaskFlowBindingDefFactoryImpl"/>
+    <dtfactory className="oracle.adf.controller.internal.dtrt.binding.BindingDTObjectFactory"/>
+  </definitionFactories>
+  <pageMap>
+    <page path="/main.jsf" usageId="com_redsamurai_view_mainPageDef"/>
+    <page path="/fragments/emplsSearchView.jsff" usageId="com_redsamurai_view_emplsSearchViewPageDef"/>
+    <page path="/fragments/emplsView.jsff" usageId="com_redsamurai_view_emplsViewPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="com_redsamurai_view_mainPageDef" path="com.redsamurai.view.pageDefs.mainPageDef"/>
+    <page id="com_redsamurai_view_emplsSearchViewPageDef"
+          path="com.redsamurai.view.pageDefs.fragments.emplsSearchViewPageDef"/>
+    <page id="com_redsamurai_view_emplsViewPageDef" path="com.redsamurai.view.pageDefs.fragments.emplsViewPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <BC4JDataControl id="HrModuleDataControl" Package="com.redsamurai.model.services"
+                     FactoryClass="oracle.adf.model.bc4j.DataControlFactoryImpl" SupportsTransactions="true"
+                     SupportsFindMode="true" SupportsRangesize="true" SupportsResetState="true"
+                     SupportsSortCollection="true" Configuration="HrModuleLocal" syncMode="Immediate"
+                     xmlns="http://xmlns.oracle.com/adfm/datacontrol"/>
+  </dataControlUsages>
+</Application>
